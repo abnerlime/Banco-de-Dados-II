@@ -1,0 +1,47 @@
+-- Comando para usar o Banco de dados que criei.
+use atividade6;
+
+create table contas(
+	id_conta int auto_increment primary key,
+  nome varchar(50),
+  saldo decimal(10,2)
+);
+insert into contas (nome, saldo) values
+('Lady Gaga', 1000.00),
+('Bob Marley', 500.00),
+('Katy Perry', 1500);
+
+
+select * from contas;
+
+update contas set saldo = saldo + 300 where id_conta = 1;
+
+-- errei o saldo que foi depositado. Coloquei R$ 300 ao invés de R$250.
+-- Vou realizar um novo update.
+
+update contas set saldo = saldo - 50 where id_conta = 1;
+select * from contas where id_conta = 1;
+
+start transaction; 
+update contas set saldo = saldo - 300 where id_conta = 3;
+update contas set saldo = saldo + 300 where id_conta = 2;
+commit; 
+
+select * from contas;
+rollback;
+
+start transaction;
+update contas set saldo = saldo - 300 where id_conta = 3;
+update contas set saldo = saldo + 300 where id_conta = 2;
+commit;
+
+select * from contas;
+
+delete from contas where id_conta = 2 ;
+
+select * from contas;
+
+select * from contas where saldo > 1000;
+
+select * from contas order by saldo desc;
+
