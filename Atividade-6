@@ -1,3 +1,5 @@
+-- A atividade consistia em criar uma tabela e manipular usando comandos do grupo de comandos DCL e TCL para fixar o conteúdo estudado.
+
 -- Comando para usar o Banco de dados que criei.
 use atividade6;
 
