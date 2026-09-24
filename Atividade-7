@@ -1,0 +1,73 @@
+create database db_clinica;
+use db_clinica;
+
+create table profissao (
+  id_profissao int auto_increment primary key,
+  area varchar(50),
+  nome varchar(100)
+);
+
+create table cidade (
+  id_cidade int auto_increment primary key,
+  nome varchar(50),
+  UF char(2)
+);
+
+create table paciente (
+  id_paciente int auto_increment primary key,
+  nome varchar(100),
+  email varchar(100),
+  idade int,
+  fone varchar(20),
+  id_profissional int,
+  id_cidade int,
+
+  constraint fk_pac_prof foreign key id_profissional int references profissional(id_profissional),
+  constraint fk_pac_cid foreign key id_cidade int references cidade(id_cidade)
+
+);
+
+create table medico (
+  id_medico int auto_increment primary key,
+  nome varchar(100),
+  email varchar(100),
+  CRM varchar(20),
+  id_cidade int,
+  constraint fk_med_cid foreign key id_cidade int references cidade (id_cidade)
+);
+
+create table especializacao (
+  id_especializacao int auto_increment primary key,
+  nome varchar(50),
+  area varchar(50)
+);
+
+create table convenio (
+  id_convenio int auto_increment primary key,
+  nome varchar(50)
+);
+
+create medEsp (
+  id_especializacao int,
+  id_medico int,
+  constraint fk_medesp_esp foreign key id_especializacao int references especializacao (id_especializacao)
+  constraint fk_medesp_med foreign key id_medico int references medico (id_medico)
+);
+
+create table consulta (
+  data_consulta date,
+  hora time,
+  valor decimal(10,2),
+  id_paciente int,
+  id_Medico int,
+  id_convenio int,
+
+  constraint fk_cons_pac foreign key id_paciente int references paciente(id_paciente),
+  constraint fk_cons_med foreign key id_medico int references medico(id_medico),
+  constraint fk_cons_conv foreign key id_convenio int refrences convenio(id_convenio)
+);
+
+create table medicamento (
+  id_medicamento int auto_increment primary key,
+  descricao varchar(100)
+);
