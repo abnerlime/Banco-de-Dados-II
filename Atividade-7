@@ -84,3 +84,21 @@ create table cons_medicame (
   constraint fk_cons_medicme_cons foreign key (data_consulta, hora, id_paciente) references consulta (data_consulta, hora, id_paciente)
 );
 
+-- Insercao de valores
+
+insert into profissao (area, nome) values
+('Medicina', 'Médico'),
+('Odontologia','Dentista'),
+('Psicologia', 'Psicólogo'),
+('Enfermagem', 'Enfermeiro'),
+('Fisioterapia', 'Fisioterapeuta');
+
+insert into cidade (nome, UF) values
+('Manaus', 'AM')
+('Boa Vista', 'RR'),
+('Cruzeiro do Sul', 'AC'),
+('Coari', 'AM'),
+('Rio Branco', 'AC');
+
+insert into paciente (nome, email, idade, fone, id_profissao, id_cidade) values
+()
