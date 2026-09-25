@@ -22,8 +22,8 @@ create table paciente (
   id_profissional int,
   id_cidade int,
 
-  constraint fk_pac_prof foreign key id_profissional int references profissional(id_profissional),
-  constraint fk_pac_cid foreign key id_cidade int references cidade(id_cidade)
+  constraint fk_pac_prof foreign key (id_profissional) references profissional(id_profissional),
+  constraint fk_pac_cid foreign key (id_cidade) references cidade(id_cidade)
 
 );
 
@@ -33,7 +33,7 @@ create table medico (
   email varchar(100),
   CRM varchar(20),
   id_cidade int,
-  constraint fk_med_cid foreign key id_cidade int references cidade (id_cidade)
+  constraint fk_med_cid foreign key (id_cidade) references cidade (id_cidade)
 );
 
 create table especializacao (
@@ -50,24 +50,37 @@ create table convenio (
 create medEsp (
   id_especializacao int,
   id_medico int,
-  constraint fk_medesp_esp foreign key id_especializacao int references especializacao (id_especializacao)
-  constraint fk_medesp_med foreign key id_medico int references medico (id_medico)
+  constraint fk_medesp_esp foreign key (id_especializacao) references especializacao (id_especializacao)
+  constraint fk_medesp_med foreign key (id_medico) references medico (id_medico)
 );
 
 create table consulta (
-  data_consulta date,
-  hora time,
+  data_consulta date not null,
+  hora time not null,
   valor decimal(10,2),
   id_paciente int,
   id_Medico int,
   id_convenio int,
 
-  constraint fk_cons_pac foreign key id_paciente int references paciente(id_paciente),
-  constraint fk_cons_med foreign key id_medico int references medico(id_medico),
-  constraint fk_cons_conv foreign key id_convenio int refrences convenio(id_convenio)
+  primary key (data_consulta, hora, id_paciente)
+  constraint fk_cons_pac foreign key (id_paciente) references paciente(id_paciente),
+  constraint fk_cons_med foreign key (id_medico) references medico(id_medico),
+  constraint fk_cons_conv foreign key (id_convenio) refrences convenio(id_convenio)
 );
 
 create table medicamento (
   id_medicamento int auto_increment primary key,
   descricao varchar(100)
 );
+
+create table cons_medicame (
+  data_consulta date not null,
+  hora time not null,
+  id_paciente int not null,
+  id_medicamento int not null,
+
+  primary key (data_cons, hora, id_paciente)
+  constraint fk_cons_medicame_medicame foreign key (id_medicamento) references medicamento (id_medicamento),
+  constraint fk_cons_medicme_cons foreign key (data_consulta, hora, id_paciente) references consulta (data_consulta, hora, id_paciente)
+);
+
